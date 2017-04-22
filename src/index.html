@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Servicio Frontend API Example</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+    <script>
+        // global variable, yuck
+        var apiurl = "https://radiant-garden-23032.herokuapp.com/api/";
+
+        // global function, yuck
+        function objectifyForm(formArray) { //serialize data function
+
+            var returnArray = {};
+            for (var i = 0; i < formArray.length; i++) {
+                returnArray[formArray[i]['name']] = formArray[i]['value'];
+            }
+            return returnArray;
+        }
+
+        function JSONForm(selector) {
+            return JSON.stringify(objectifyForm($(selector).serializeArray()));
+        }
+    </script>
+    Register example
+    <form id="register">
+        Username:
+        <input type="text" name="name"> Email:
+        <input type="text" name="email"> Password:
+        <input type="password" name="password">
+        <input type="button" value="Register" id="register">
+    </form>
+    <script>
+        $('input#register').click(
+            () => {
+                let data = JSONForm('form#register');
+                $.ajax($.ajax({
+                    type: 'POST',
+                    url: apiurl + 'user/register',
+                    data: data,
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: (err) => {
+                        console.log(err);
+                    }
+                }))
+            }
+        )
+    </script>
+</body>
+
+</html>
