@@ -1,0 +1,23 @@
+{
+  "name": "servicio-frontend",
+  "version": "0.0.1",
+  "description": "Frontend layer of the Servicio application",
+  "main": "dist/script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JouzaLoL/servicio-frontend.git"
+  },
+  "author": "Josef Vacek",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JouzaLoL/servicio-frontend/issues"
+  },
+  "homepage": "https://github.com/JouzaLoL/servicio-frontend#readme",
+  "dependencies": {
+    "@types/jquery": "^2.0.41",
+    "jquery": "^3.2.1"
+  }
+}

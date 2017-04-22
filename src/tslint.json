@@ -1,0 +1,17 @@
+{
+    "rules": {
+        "semicolon": [true],
+        "no-consecutive-blank-lines": [true, 2],
+        "interface-name": [true, "always-prefix"],
+        "comment-format": [true, "check-space", "check-uppercase"],
+        "no-trailing-whitespace": true,
+        "no-empty": true,
+        "curly": true,
+        "no-duplicate-variable": true,
+        "no-shadowed-variable": true,
+        "no-switch-case-fall-through": true,
+        "no-unused-variable": [true],
+        "class-name": true,
+        "variable-name": [true, "check-format", "allow-leading-underscore", "allow-pascal-case"]
+    }
+}
