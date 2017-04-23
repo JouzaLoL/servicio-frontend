@@ -1,4 +1,5 @@
 {
+    "extends": "tslint:latest",
     "rules": {
         "semicolon": [true],
         "no-consecutive-blank-lines": [true, 2],
@@ -12,6 +13,14 @@
         "no-switch-case-fall-through": true,
         "no-unused-variable": [true],
         "class-name": true,
-        "variable-name": [true, "check-format", "allow-leading-underscore", "allow-pascal-case"]
+        "variable-name": [true, "check-format", "allow-leading-underscore", "allow-pascal-case"],
+        "trailing-comma": [
+            false
+        ],
+        "quotemark": [
+            "double"
+        ],
+        "eofline": false,
+        "max-classes-per-file": [10]
     }
 }

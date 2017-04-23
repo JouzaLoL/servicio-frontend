@@ -18,6 +18,8 @@
   "homepage": "https://github.com/JouzaLoL/servicio-frontend#readme",
   "dependencies": {
     "@types/jquery": "^2.0.41",
-    "jquery": "^3.2.1"
+    "@types/request": "0.0.42",
+    "jquery": "^3.2.1",
+    "request": "^2.81.0"
   }
 }
