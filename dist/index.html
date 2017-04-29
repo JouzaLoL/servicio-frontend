@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Servicio Frontend API Example</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="./helper.js"></script>
+</head>
+
+<body>
+    <script>
+        $(document).ready(() => {
+            var baseUrl = "https://servicio-api.herokuapp.com/api";
+            var token;
+
+            $(document).ajaxComplete(function (event, xhr) {
+                $("pre#response").text(JSON.stringify(xhr.responseJSON, null, 2));
+            });
+
+            $(document).ajaxSend(function (event, request, settings) {
+                $("pre#request").text(JSON.stringify(JSON.parse(settings.data || JSON.stringify(settings)), null, 2));
+            });
+
+            $('input#register').click(
+                () => {
+                    let data = parseForm('#register');
+                    $.ajax({
+                        url: baseUrl + "/user/register",
+                        method: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: data
+                    }).done((data) => {
+                        console.log(data);
+                    });
+                }
+            );
+
+            $('input#auth').click(
+                () => {
+                    let data = parseForm('#auth');
+                    $.ajax({
+                        url: baseUrl + "/user/authenticate",
+                        method: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: data
+                    }).done((data) => {
+                        console.log(data);
+                        token = data.token;
+                    });
+                }
+            );
+
+            $('input#getuser').click(
+                () => {
+                    $.ajax({
+                        url: baseUrl + "/user/",
+                        method: "GET",
+                        headers: {
+                            "x-access-token": token
+                        },
+                        dataType: "json",
+                    }).done((data) => {
+                        console.log(data);
+                    });
+                }
+            );
+
+            $('input#addcar').click(
+                () => {
+                    let data = parseForm('#addcar');
+                    $.ajax({
+                        url: baseUrl + "/user/cars",
+                        method: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        headers: {
+                            "x-access-token": token
+                        },
+                        data: data
+                    }).done((data) => {
+                        console.log(data);
+                    });
+                }
+            );
+        });
+    </script>
+    <h3>Request</h3>
+    <pre id="request"></pre>
+    <h3>Response</h3>
+    <pre id="response"></pre>
+
+    <div>User register
+        <form id="register">
+            Name:
+            <input type="text" name="name"> Email:
+            <input type="text" name="email"> Password:
+            <input type="password" name="password">
+            <input type="button" value="Register" id="register">
+        </form>
+        <hr>
+    </div>
+    <div>User authenticate
+        <form id="auth"> Email:
+            <input type="text" name="email"> Password:
+            <input type="password" name="password">
+            <input type="button" value="Authenticate" id="auth">
+        </form>
+        <hr>
+    </div>
+    <div>Get User
+        <form id="getuser">
+            <input type="button" value="Get User" id="getuser">
+        </form>
+        <hr>
+    </div>
+    <div>Add Car
+        <form id="addcar">
+            SPZ:
+            <input type="text" name="SPZ"> Model:
+            <input type="text" name="model">Year:
+            <input type="text" name="year">
+            <input type="button" value="Add Car" id="addcar">
+        </form>
+        <hr>
+    </div>
+</body>
+
+</html>

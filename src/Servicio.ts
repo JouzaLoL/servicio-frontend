@@ -4,22 +4,26 @@ import * as request from 'request';
 class ServicioFrontend {
     private readonly APIURL: string;
     private readonly URL: {
-        [index: string]: string;
-        User: "/user",
-        Authenticate: "/user/authenticate",
-        Register: "/user/register"
-
+        [index: string]: string
     };
     private Type: UserType;
     constructor(options: ServicioOptions) {
         this.APIURL = options.ApiUrl;
         this.Type = options.Type;
+        this.URL = {
+            authenticate: "/authenticate",
+            register: "/register",
+        };
     }
     public getAPIKey(email: string, password: string): APIResponse {
         const options: request.CoreOptions = {
-            baseUrl: this.APIURL + this.getUserUrl()
+            baseUrl: this.APIURL + this.getUserUrl(),
+            method: "GET",
+            json: true,
+            body: { email, password }
+
         };
-        request(this.URL.Authenticate, options, (err, res, body) => {
+        request(this.url('authenticate'), options, (err, res, body) => {
             if (err) {
                 throw err;
             }
@@ -30,8 +34,18 @@ class ServicioFrontend {
         return new APIResponse(false, "Unknown error");
     }
     private getUserUrl(): string {
-        const type: string = UserType[this.Type];
-        const url: string = this.URL[type];
+        switch (this.Type) {
+            case UserType.User:
+                return '/user';
+            case UserType.Vendor:
+                return '/vendor';
+        }
+    }
+    private url(path: string): string {
+        const url = this.URL[path];
+        if (!url) {
+            throw Error('API Url not found');
+        }
         return url;
     }
 }
@@ -60,4 +74,4 @@ enum UserType {
     Vendor
 }
 
-export { ServicioFrontend, APIResponse, UserType,  };
+export { ServicioFrontend, UserType, };
