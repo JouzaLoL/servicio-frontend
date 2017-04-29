@@ -4,6 +4,7 @@ import * as request from 'request';
 class ServicioFrontend {
     private readonly APIURL: string;
     private readonly URL: {
+        [index: string]: string;
         User: "/user",
         Authenticate: "/user/authenticate",
         Register: "/user/register"
@@ -16,10 +17,22 @@ class ServicioFrontend {
     }
     public getAPIKey(email: string, password: string): APIResponse {
         const options: request.CoreOptions = {
-            baseUrl: this.APIURL + this.URL[UserType[this.Type]] + this.URL.Authenticate
+            baseUrl: this.APIURL + this.getUserUrl()
         };
-        
+        request(this.URL.Authenticate, options, (err, res, body) => {
+            if (err) {
+                throw err;
+            }
+            console.log(res);
+            return JSON.parse(body);
+
+        });
         return new APIResponse(false, "Unknown error");
+    }
+    private getUserUrl(): string {
+        const type: string = UserType[this.Type];
+        const url: string = this.URL[type];
+        return url;
     }
 }
 
@@ -28,7 +41,7 @@ class ServicioOptions {
     public Type: UserType;
     constructor(apiUrl: string, userType: UserType) {
         this.ApiUrl = apiUrl;
-        this.UserType = UserType;
+        this.Type = userType;
     }
 }
 
@@ -46,3 +59,5 @@ enum UserType {
     User,
     Vendor
 }
+
+export { ServicioFrontend, APIResponse, UserType,  };

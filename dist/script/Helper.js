@@ -1,5 +1,4 @@
 import * as $ from 'jquery';
-
 class Helper {
     /**
      * Creates an element with optional attributes
@@ -11,7 +10,7 @@ class Helper {
      *
      * @memberOf Helper
      */
-    public static c(element: string, attributes?: object): JQuery {
+    static c(element, attributes) {
         const e = $(document.createElement(element));
         if (attributes) {
             e.attr(attributes);
@@ -19,5 +18,4 @@ class Helper {
         return e;
     }
 }
-
 export { Helper };
